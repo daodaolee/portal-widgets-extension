@@ -1,24 +1,9 @@
-# v3
+![](https://fastly.jsdelivr.net/gh/daodaolee/photobed@main/img/1661272697692默认标题__2022-08-24+00_27_26.png)
 
-## Project setup
-```
-npm install
-```
+# Portal Widgets
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+一个极简风格的谷歌扩展标签页
 
-### Compiles and minifies for production
-```
-npm run build
-```
+![](https://fastly.jsdelivr.net/gh/daodaolee/photobed@main/img/16612727944651661272793554.png)
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+![](https://fastly.jsdelivr.net/gh/daodaolee/photobed@main/img/16612728194841661272819378.png)
