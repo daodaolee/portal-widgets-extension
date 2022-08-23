@@ -1,0 +1,54 @@
+{
+	"manifest_version": 3,
+	"name": "portal-widgets",
+	"description": "基于vue3.x版本的chrome插件",
+	"version": "1.0.0",
+	"action": {
+		"default_title": "portal-widgets",
+		"default_icon": "assets/images/icon48.png",
+		"default_popup": "popup.html"
+	},
+	"permissions": [
+		"management"
+	],
+	"chrome_url_overrides": {
+		"newtab": "popup.html"
+	},
+	"background": {
+		"service_worker": "./js/background.js"
+	},
+	"icons": {
+		"16": "assets/images/icon16.png",
+		"48": "assets/images/icon48.png",
+		"128": "assets/images/icon128.png"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"https://*.taobao.com/*"
+			],
+			"css": [
+				"css/content.css"
+			],
+			"js": [
+				"js/chunk-vendors.js",
+				"js/content.js"
+			],
+			"run_at": "document_idle"
+		}
+	],
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"js/inject.js"
+			],
+			"matches": [
+				"https://*.taobao.com/*"
+			]
+		}
+	],
+	"content_security_policy": {
+		"script-src": "self",
+		"object-src": "self"
+	}
+}
