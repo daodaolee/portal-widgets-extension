@@ -5,7 +5,7 @@
 	"version": "1.0.0",
 	"action": {
 		"default_title": "portal-widgets",
-		"default_icon": "assets/images/icon48.png",
+		"default_icon": "assets/images/icon128.png",
 		"default_popup": "popup.html"
 	},
 	"permissions": [
@@ -18,8 +18,6 @@
 		"service_worker": "./js/background.js"
 	},
 	"icons": {
-		"16": "assets/images/icon16.png",
-		"48": "assets/images/icon48.png",
 		"128": "assets/images/icon128.png"
 	},
 	"content_scripts": [
