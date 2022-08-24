@@ -1,6 +1,6 @@
-@import "reset.less";
-@import "var.less";
-@import "dark.less";
+@import 'reset.less';
+@import 'var.less';
+@import 'dark.less';
 
 .w100 {
   width: 100%;
@@ -15,14 +15,13 @@ body {
   width: 100%;
   height: 100%;
   font-size: 16px;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
 }
 
 #app {
   width: 100%;
   height: 100%;
 }
-
-
 
 // 居中loading
 .spin-center {
@@ -147,7 +146,7 @@ body {
 }
 
 .flex-4 {
-  flex: 4
+  flex: 4;
 }
 
 .flex-column {
@@ -172,6 +171,10 @@ body {
 .flex-start-end {
   justify-content: flex-start;
   align-items: flex-end;
+}
+.flex-between-center {
+  justify-content: space-between;
+  align-items: center;
 }
 
 .flex-end-end {
