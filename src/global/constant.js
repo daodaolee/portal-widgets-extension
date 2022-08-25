@@ -61,6 +61,8 @@ export const weatherRange = {
     '小雨': 'weatherDayRain',
     '小雨-中雨': 'weatherDayRain',
     '中雨': 'weatherDayRain',
+    '中雨-大雨': 'weatherDayRain',
+    '大雨': 'weatherDayRain',
     '雷阵雨': 'weatherDayRain',
 
     '小雪': 'weatherDaySnow',
