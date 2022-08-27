@@ -1,8 +1,12 @@
 import { pinyin } from 'pinyin-pro';
 export default function (chinese) {
-  let pinyinString = pinyin(chinese, { toneType: 'none' })
-  if (pinyinString) {
-    pinyinString = pinyinString.replace(/\s+/g, '');
+  let pinyinStringAll = pinyin(chinese, { toneType: 'none' })
+  let pinyinStringPattern = pinyin(chinese, { pattern: 'first' })
+  if (pinyinStringAll) {
+    pinyinStringAll = pinyinStringAll.replace(/\s+/g, '');
   }
-  return pinyinString
+  if (pinyinStringPattern) {
+    pinyinStringPattern = pinyinStringPattern.replace(/\s+/g, '');
+  }
+  return pinyinStringAll + '-' + pinyinStringPattern
 }

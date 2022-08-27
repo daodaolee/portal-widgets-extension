@@ -33,7 +33,7 @@ import { useChineseToPinyin, useMetaKey } from '../../hooks'
 
 let showSearchPanel = ref(false)
 // 当前选中的条目
-let isResultActive = ref(-1)
+let isResultActive = ref(0)
 let enginesData = ref(engines)
 let currentBookmark = ref({})
 window.addEventListener('keydown', (e) => {
@@ -41,11 +41,16 @@ window.addEventListener('keydown', (e) => {
   const info = systemInfo()
   const key1 = info === 'win' ? e.ctrlKey : e.metaKey
   const key2 = e.key === 'k'
-  const key3 = e.key === 'Escape'
-  if (key1 && key2 || key3) {
+  if (key1 && key2) {
     showSearchPanel.value = !showSearchPanel.value
     return
   }
+  const key3 = e.key === 'Escape'
+  if (key3) {
+    showSearchPanel.value = false
+    return
+  }
+
   if (showSearchPanel.value) {
     // 上下按键更换选中条目
     arrowUpDownChange(isResultActive, result.value.length ? result : enginesData, e, () => {
@@ -56,7 +61,7 @@ window.addEventListener('keydown', (e) => {
   // 回车跳转
   if (e.key === 'Enter') {
     if (showEngines.value) {
-      if (isResultActive.value > -1) {
+      if (isResultActive.value > 0) {
         window.open(enginesData.value[isResultActive.value].url + keyword.value, useMetaKey(e))
       } else {
         return
@@ -75,7 +80,7 @@ window.addEventListener('click', (e) => {
 })
 
 function clearArrowUpDown() {
-  isResultActive.value = -1
+  isResultActive.value = 0
 }
 // 点击书签面板跳转
 function toSearchBookmark(bookmark, e) {
@@ -85,7 +90,7 @@ function toSearchBookmark(bookmark, e) {
 // 监听当前选中书签
 watch(currentBookmark, nv => {
   if (nv) {
-    keyword.value = currentBookmark.value.title
+    // keyword.value = currentBookmark.value.title
   }
 })
 
@@ -141,8 +146,8 @@ function search(e) {
   const includesStr = (data) => {
     return (
       data.title.includes(keyword.value) ||
-      data.pinyin.includes(keyword.value) ||
-      data.url.includes(keyword.value)
+      data.pinyin.includes(keyword.value)
+      // data.url.includes(keyword.value)
     )
   }
   const data = resultBookmark.value.filter((data) => includesStr(data))
