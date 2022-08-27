@@ -4,6 +4,8 @@
     <Layout />
     <IconifyTip />
     <BottomTip />
+    <Typewrite />
+    <SearchPanel />
   </div>
 </template>
 
@@ -12,7 +14,8 @@ import Layout from '../layout/index.vue'
 import Mode from '../components/mode.vue'
 import IconifyTip from '../components/iconifyTip.vue';
 import BottomTip from '../components/bottomTip.vue';
-
+import Typewrite from '../components/typewrite.vue'
+import SearchPanel from '../components/searchPanel.vue';
 </script>
 <style lang="less">
 .home {

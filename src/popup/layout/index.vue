@@ -4,7 +4,6 @@
     <div class="container flex flex-column">
       <div class="container-time flex flex-center">
         <!-- <p>{{ time }}</p> -->
-        <typewrite />
         <weather class="container-time-weather" />
       </div>
       <div class="container-search flex flex-center">
@@ -39,7 +38,6 @@ import { ref } from 'vue'
 import { icons, engines } from '../../global'
 import { useMetaKey } from '../../hooks'
 import weather from '../components/weather.vue'
-import typewrite from '../components/typewrite.vue'
 
 // 书签组件
 const widgets = ref(icons)

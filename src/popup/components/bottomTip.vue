@@ -2,10 +2,13 @@
   <div class="bottomTip">
     <svg-icon name="question" class="question" />
     <div class="modal">
-      command / ctrl + 链接：新标签页打开
+      <p>command / ctrl + 链接：新标签页打开</p>
+      <p>command / ctrl + k：搜索书签</p>
+      <p>上下方向键：选择书签</p>
     </div>
   </div>
 </template>
+
 <style lang="less" scoped>
 .bottomTip {
   position: fixed;
@@ -24,7 +27,7 @@
 
   .modal {
     position: absolute;
-    top: -50px;
+    bottom: 30px;
     right: 2px;
     padding: 10px 6px;
     width: max-content;
