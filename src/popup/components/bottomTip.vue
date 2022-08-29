@@ -14,6 +14,13 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
+
+  svg {
+    &:hover {
+      animation: pulse 0.5s ease-in-out;
+    }
+  }
+
   z-index: 10;
 
   .question {
@@ -37,6 +44,20 @@
     border: 1px solid var(--font-color);
     transition: all 0.3s;
     opacity: 0
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scaleX(1)
+  }
+
+  50% {
+    transform: scale3d(1.2, 1.2, 1.2)
+  }
+
+  to {
+    transform: scaleX(1)
   }
 }
 </style>

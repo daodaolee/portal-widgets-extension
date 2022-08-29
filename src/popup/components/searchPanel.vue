@@ -194,13 +194,11 @@ function toSearchEngine(engine, e) {
   top: 0;
   left: 0;
   background: var(--bookmark-mask-bg-color);
-  // opacity: 0.9;
 
   &-search {
     position: absolute;
     left: 50%;
-    top: 350px;
-    // top: 20vh;
+    margin-top: 18vh;
     transform: translateX(-50%);
     border: 1.6px solid var(--bookmark-border-color);
     border-radius: 10px;

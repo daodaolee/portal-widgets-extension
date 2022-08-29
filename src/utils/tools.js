@@ -17,16 +17,16 @@ export function arrowUpDownChange(item, array, e, cb) {
   const length = array.value.length
 
   if (up) {
-    if (item.value === -1 || item.value === 0) {
-      // 默认 或者 第一个
+    if (item.value === 0) {
+      // 默认第一个
       item.value = length - 1
     } else {
       item.value -= 1
     }
   }
   if (down) {
-    if (item.value === -1 || item.value === length - 1) {
-      // 默认 或者 最后一个
+    if (item.value === length - 1) {
+      // 默认最后一个
       item.value = 0
     } else {
       item.value += 1

@@ -74,6 +74,7 @@ function toWeather() {
   &-now {
     z-index: 2;
     position: relative;
+    cursor: pointer;
 
     svg {
       width: 2.2em;
@@ -105,23 +106,65 @@ function toWeather() {
   }
 }
 
+
+@keyframes rubberBand {
+  0% {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1)
+  }
+
+  30% {
+    -webkit-transform: scale3d(1.25, .75, 1);
+    transform: scale3d(1.25, .75, 1)
+  }
+
+  40% {
+    -webkit-transform: scale3d(.75, 1.25, 1);
+    transform: scale3d(.75, 1.25, 1)
+  }
+
+  50% {
+    -webkit-transform: scale3d(1.15, .85, 1);
+    transform: scale3d(1.15, .85, 1)
+  }
+
+  65% {
+    -webkit-transform: scale3d(.95, 1.05, 1);
+    transform: scale3d(.95, 1.05, 1)
+  }
+
+  75% {
+    -webkit-transform: scale3d(1.05, .95, 1);
+    transform: scale3d(1.05, .95, 1)
+  }
+
+  to {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1)
+  }
+}
+
+.weather-now:hover {
+  animation: rubberBand 1s ease-in-out forwards;
+}
+
 .weather-now:hover+.weather-future {
   .weather-future-item {
 
     &:nth-child(1) {
       transform: translate(40px, -60px);
-      transition-delay: 0.01s;
+      transition-delay: 0.41s;
       opacity: 1;
     }
 
     &:nth-child(2) {
-      transition-delay: 0.04s;
+      transition-delay: 0.44s;
       transform: translate(70px, 0px);
       opacity: 1;
     }
 
     &:nth-child(3) {
-      transition-delay: 0.08s;
+      transition-delay: 0.48s;
       transform: translate(40px, 60px);
       opacity: 1;
     }
