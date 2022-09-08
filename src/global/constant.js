@@ -120,7 +120,7 @@ export const widgetList = [
   },
   {
     svg: 'vue',
-    url: 'https://zh-hans.reactjs.org/',
+    url: 'https://cn.vuejs.org/',
     relate: {
       'Vue Router': 'https://router.vuejs.org/zh/',
       Pinia: 'https://pinia.vuejs.org/',
