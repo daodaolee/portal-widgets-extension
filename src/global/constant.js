@@ -145,4 +145,7 @@ export const widgetList = [{
 }, {
   svg: 'npm',
   url: 'https://www.npmjs.com/'
+}, {
+  svg: 'lib',
+  url: 'http://lib.daodaolee.cn/'
 }]
