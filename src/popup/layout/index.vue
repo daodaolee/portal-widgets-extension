@@ -6,22 +6,30 @@
         <!-- <p>{{ time }}</p> -->
         <weather class="container-time-weather" />
       </div>
-      <div class="container-search flex flex-center">
-        <div class="container-search-box flex flex-center">
-          <div class="prefix flex-1 flex flex-center">
-            <svg-icon class="currentEngine" :name="currentEngine.svg" :title="currentEngine.title"
-              @click.stop="checkEngineStatus" />
-            <div class="container-search-engine">
+      <div class="container-search flex flex-column  flex-center">
+        <div
+          :class="['container-search-box', 'flex', 'flex-center', result.length ? 'noBorderBottoRadius' : '', !isDark && result.length ? 'lightBorder' : '']">
+          <!--  <div class="prefix flex-1 flex flex-center">
+             <svg-icon class="currentEngine" :name="currentEngine.svg" :title="currentEngine.title"
+              @click.stop="checkEngineStatus" /> -->
+          <!-- <div class="container-search-engine">
               <div :class="['container-search-engine-item', showEngineList ? 'active' : '']"
                 v-for="engine in enginesList" :key="engine.title"
                 @click.stop="currentEngine = engine; showEngineList = false">
                 <svg-icon :name="engine.svg" :title="engine.title" />
               </div>
-            </div>
-          </div>
-          <input class="h100" type="text" autofocus v-model="keyword">
-          <div class="suffix flex-1 flex flex-center">
+            </div> 
+          </div>-->
+          <div class="prefix flex flex-center">
             <svg-icon class="search" name="search" title="搜索" @click.stop="(e) => toSearch(e)" />
+          </div>
+          <input class="h100" type="text" autofocus v-model="keyword" @input.stop="e => search(e)">
+
+          <div class="container-search-panel flex flex-center normal  flex-column" v-show="result.length">
+            <p :class="[isResultActive === index ? 'active' : '']" v-for="(item, index) in result" :key="index"
+              @click.stop="e => toSearchBookmark(item, e)">
+              {{ item.title }}
+            </p>
           </div>
         </div>
       </div>
@@ -32,26 +40,38 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
-import { engines } from '../../global'
-import { useMetaKey } from '../../hooks'
+import { ref, nextTick } from 'vue'
+import { engines, bookmark } from '../../global'
+import { useMetaKey, useChineseToPinyin } from '../../hooks'
+import { arrowUpDownChange, flatData } from '../../utils/tools'
 import weather from '../components/weather.vue'
 import Widget from '../components/widget.vue'
+import { useDark } from '@vueuse/core'
+
+let isDark = useDark()
 
 // 搜索引擎
 const enginesList = ref(engines)
+
 // 搜索引擎显示隐藏
-let showEngineList = ref(false)
-const checkEngineStatus = () => {
-  showEngineList.value = !showEngineList.value
-}
+// let showEngineList = ref(false)
+// const checkEngineStatus = () => {
+//   showEngineList.value = !showEngineList.value
+// }
+// 当前选中的条目
+let isResultActive = ref(0)
+
+let currentBookmark = ref({})
+let result = ref([])
+// 搜索结果
+let resultBookmark = ref([])
 
 // 切换引擎
-let currentEngine = ref({
-  title: '谷歌',
-  svg: 'google',
-  url: 'https://www.google.com/search?q='
-})
+// let currentEngine = ref({
+//   title: '谷歌',
+//   svg: 'google',
+//   url: 'https://www.google.com/search?q='
+// })
 
 let keyword = ref('')
 
@@ -74,19 +94,104 @@ const toSearch = (e) => {
 //   getTime()
 // }, 1000)
 
+// 获取所有书签
+async function getResultBookmark() {
+  let temp = flatData(await bookmark())
+  let filterData = temp.filter((item) => item.url && item.title)
+  let bookmarkData = filterData
+
+  resultBookmark.value = bookmarkData.map((item) => {
+    return {
+      ...item,
+      pinyin: useChineseToPinyin(item.title)
+    }
+  })
+}
+getResultBookmark()
+
+// 点击书签面板跳转
+function toSearchBookmark(bookmark, e) {
+  currentBookmark.value = bookmark
+  window.open(bookmark.url, useMetaKey(e))
+}
+function clearArrowUpDown() {
+  isResultActive.value = 0
+}
+
+// 搜索
+function search(e) {
+  clearArrowUpDown()
+  arrowUpDownChange(isResultActive, result.value.length ? result : enginesList, e, () => {
+    currentBookmark.value = result.value[isResultActive.value]
+  })
+
+  if (!keyword.value) {
+    result.value.length = 0
+    // showEngines.value = false
+    return
+  }
+  const includesStr = (data) => {
+    return (
+      data.title.includes(keyword.value) ||
+      data.pinyin.includes(keyword.value)
+      // data.url.includes(keyword.value)
+    )
+  }
+  const data = resultBookmark.value.filter((data) => includesStr(data))
+  nextTick(() => {
+    if (data.length) {
+      // showEngines.value = false
+      result.value = data.slice(0, 12)
+    } else {
+      // showEngines.value = true
+      result.value = []
+    }
+  })
+}
+
 window.addEventListener('keyup', (e) => {
   if (e.key === 'Enter' && keyword.value) {
     toSearch(e)
   }
 })
-window.addEventListener('click', () => {
-  showEngineList.value = false
-})
+window.addEventListener('keydown', (e) => {
+  // command + k 或者 esc 快捷键
+  // const info = systemInfo()
+  // const key1 = info === 'win' ? e.ctrlKey : e.metaKey
+  // const key2 = e.key === 'k'
+  // if (key1 && key2) {
+  //   showSearchPanel.value = !showSearchPanel.value
+  //   return
+  // }
+  const key3 = e.key === 'Escape'
+  if (key3) {
+    result.value = []
+    return
+  }
 
+  // if (showSearchPanel.value) {
+  // 上下按键更换选中条目
+  arrowUpDownChange(isResultActive, result.value.length ? result : enginesList, e, () => {
+    currentBookmark.value = result.value[isResultActive.value]
+
+  })
+  // }
+  // 回车跳转
+  if (e.key === 'Enter') {
+    if (currentBookmark.value?.title) {
+      window.open(currentBookmark.value.url, useMetaKey(e))
+    }
+  }
+})
+// window.addEventListener('click', () => {
+//   showEngineList.value = false
+// })
 
 
 </script>
 <style lang="less" scoped>
+@import '../../assets/css/common.less';
+
 .layout {
   background: var(--bg-color);
   transition: background 0.2s ease-in-out;
@@ -96,9 +201,10 @@ window.addEventListener('click', () => {
   .container {
     padding-top: 16vh;
     align-items: center;
+    position: relative;
 
     &-time {
-      width: 560px;
+      width: 550px;
       // padding: 50px 0px 0px;
       color: var(--font-color);
       position: relative;
@@ -121,16 +227,34 @@ window.addEventListener('click', () => {
       padding-top: 100px;
 
       &-box {
-        width: 560px;
-        height: 44px;
-        border: 1.6px solid var(--svg-color);
-        border-radius: 20px;
+        width: 570px;
+        height: 45px;
+        border-radius: 10px;
+        background: var(--bookmark-bg-color);
+        padding-right: 10px;
+        border: 2px solid var(--bookmark-border-color);
+
+        &.lightBorder {
+          border: 2px solid var(--bookmark-border-color);
+          // border-bottom: none;
+
+          .container-search-panel {
+            border: 2px solid var(--bookmark-border-color);
+            border-top: none;
+          }
+        }
+
+        &.noBorderBottoRadius {
+          border-bottom-left-radius: 0px;
+          border-bottom-right-radius: 0px;
+          border-bottom: none;
+        }
 
         input {
-          width: 480px;
+          width: 520px;
           border: none;
           padding: 0;
-          background: var(--bg-color);
+          background: var(--bookmark-bg-color);
           color: var(--font-color);
           transition: background 0.2s ease-in-out;
         }
@@ -139,18 +263,17 @@ window.addEventListener('click', () => {
           padding-left: 3px;
           position: relative;
 
-          .currentEngine {
-            width: 1.3em;
-            height: 1.3em;
-            z-index: 1;
-
-            &:hover {
-              animation: floatY 1s infinite ease-in-out alternate;
-            }
+          svg {
+            width: 1.2em;
+            height: 1.2em;
+            color: var(--svg-color);
           }
+
+          padding-right: 10px;
         }
 
         .suffix {
+          width: 40px;
           padding-right: 8px;
 
           &:hover {
@@ -160,6 +283,52 @@ window.addEventListener('click', () => {
           svg {
             width: 1.4em;
             height: 1.4em;
+          }
+        }
+      }
+
+      &-panel {
+        position: absolute;
+        top: 146px;
+        left: 0;
+        transition: height 0.35s ease-in-out;
+        padding: 10px;
+        color: var(--font-color);
+        font-size: 14px;
+        height: max-content;
+        // max-height: 445px;
+        overflow: auto;
+        .scrollbar-hide();
+        z-index: 10;
+        border-top: 1.6px solid var(--bookmark-border-color);
+        background: var(--bookmark-bg-color);
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border: 2px solid var(--bookmark-border-color);
+
+        p {
+          cursor: pointer;
+          transition: all 0.1s;
+          border-radius: 6px;
+          padding: 7px;
+          align-items: center;
+          width: 546px;
+          .text-ellipsis();
+
+          &:not(:last-child) {
+            margin-bottom: 5px;
+          }
+
+          &.active,
+          &:hover {
+            background: var(--bookmark-hover-color)
+          }
+        }
+
+        &.engines {
+          svg {
+            width: 1.2em;
+            height: 1.2em;
           }
         }
       }

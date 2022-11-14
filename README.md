@@ -4,13 +4,14 @@
   
   # Portal Widgets
   
-  一个极简风格的谷歌扩展标签页，支持亮暗主题。
+  一个极简风格的谷歌扩展标签页，支持拼音搜索书签，支持亮暗主题。
   
 </div>
 
 
 
 
-![](https://fastly.jsdelivr.net/gh/daodaolee/photobed@main/img/16613593910091661359390824.png)
+![](./screenshot/dark.png)
 
-![](https://fastly.jsdelivr.net/gh/daodaolee/photobed@main/img/16613594250771661359424962.png)
+
+![](./screenshot/light.png)

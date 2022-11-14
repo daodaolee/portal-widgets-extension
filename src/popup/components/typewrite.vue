@@ -30,7 +30,7 @@ onMounted(() => {
           link.value = data[position].url
         }
       };
-      new Typed(document.querySelector("#typewrite"), options)
+      new Typed(document.querySelector('#typewrite'), options)
     }
   })
 

@@ -2,7 +2,6 @@ export const icons = [{
   title: 'blog',
   svg: 'blog',
   url: 'https://daodaolee.cn/'
-
 }, {
   title: 'github',
   svg: 'github',
@@ -123,6 +122,9 @@ export const widgetList = [{
     'Next': 'https://www.nextjs.cn/'
   }
 }, {
+  svg: 'svelte',
+  url: 'https://v2.svelte.dev/guide'
+}, {
   svg: 'webpack',
   url: 'https://webpack.docschina.org/concepts/',
   relate: {
@@ -148,4 +150,13 @@ export const widgetList = [{
 }, {
   svg: 'lib',
   url: 'http://lib.daodaolee.cn/'
+}, {
+  svg: 'douban',
+  url: 'https://movie.douban.com/'
+}, {
+  svg: 'figma',
+  url: 'https://www.figma.com/files/drafts?fuid=1162644259931109212'
+}, {
+  svg: 'dribbble',
+  url: 'https://dribbble.com/'
 }]

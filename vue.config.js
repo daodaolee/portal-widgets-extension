@@ -61,17 +61,17 @@ module.exports = {
     }
 
     config.module.rule('svg').exclude.add(resolve('src/icons')).end()
-    config.module
-      .rule('icons')
-      .test(/\.svg$/)
-      .include.add(resolve('src/icons'))
-      .end()
-      .use('svg-sprite-loader')
-      .loader('svg-sprite-loader')
-      .options({
+    config.module.
+      rule('icons').
+      test(/\.svg$/).
+      include.add(resolve('src/icons')).
+      end().
+      use('svg-sprite-loader').
+      loader('svg-sprite-loader').
+      options({
         symbolId: 'icon-[name]'
-      })
-      .end()
+      }).
+      end()
   },
   // 配置 content.css
   css: {

@@ -3,22 +3,22 @@ import { Request } from './request'
 
 export function getCityInfo() {
   return Request.get(
-    'https://restapi.amap.com/v3/ip?key=bc3c92b66e5a89bc22f22bae29b7f574&output=json'
+    'https://restapi.amap.com/v3/ip?key=${高德Key}&output=json'
   )
 }
 
 export function getWeatherAll(city) {
   return Request.get(
-    `https://restapi.amap.com/v3/weather/weatherInfo?key=bc3c92b66e5a89bc22f22bae29b7f574&city=${city}&extensions=all`
+    `https://restapi.amap.com/v3/weather/weatherInfo?key=${高德Key}&city=${city}&extensions=all`
   )
 }
 export function getWeatherNow(city) {
   return Request.get(
-    `https://restapi.amap.com/v3/weather/weatherInfo?key=bc3c92b66e5a89bc22f22bae29b7f574&city=${city}&extensions=base`
+    `https://restapi.amap.com/v3/weather/weatherInfo?key=${高德Key}&city=${city}&extensions=base`
   )
 }
 export function getWeibo() {
-  return Request.get(`https://api.vvhan.com/api/wbhot`)
+  return Request.get('https://api.vvhan.com/api/wbhot')
 }
 
 // export default class api {

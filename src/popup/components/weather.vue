@@ -61,9 +61,8 @@ getAdcode().then(adcode => {
 })
 
 function toWeather() {
-  window.open("https://www.baidu.com/s?tn=68018901_2_oem_dg&ie=utf-8&wd=天气", '_blank')
+  window.open('https://www.baidu.com/s?tn=68018901_2_oem_dg&ie=utf-8&wd=天气', '_blank')
 }
-
 
 
 </script>
