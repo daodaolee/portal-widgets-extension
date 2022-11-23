@@ -9,19 +9,8 @@
       <div class="container-search flex flex-column  flex-center">
         <div
           :class="['container-search-box', 'flex', 'flex-center', result.length ? 'noBorderBottoRadius' : '', !isDark && result.length ? 'lightBorder' : '']">
-          <!--  <div class="prefix flex-1 flex flex-center">
-             <svg-icon class="currentEngine" :name="currentEngine.svg" :title="currentEngine.title"
-              @click.stop="checkEngineStatus" /> -->
-          <!-- <div class="container-search-engine">
-              <div :class="['container-search-engine-item', showEngineList ? 'active' : '']"
-                v-for="engine in enginesList" :key="engine.title"
-                @click.stop="currentEngine = engine; showEngineList = false">
-                <svg-icon :name="engine.svg" :title="engine.title" />
-              </div>
-            </div> 
-          </div>-->
           <div class="prefix flex flex-center">
-            <svg-icon class="search" name="search" title="搜索" @click.stop="(e) => toSearch(e)" />
+            <svg-icon class="search" name="search" title="搜索"/>
           </div>
           <input class="h100" type="text" autofocus v-model="keyword" @input.stop="e => search(e)">
 
@@ -53,11 +42,6 @@ let isDark = useDark()
 // 搜索引擎
 const enginesList = ref(engines)
 
-// 搜索引擎显示隐藏
-// let showEngineList = ref(false)
-// const checkEngineStatus = () => {
-//   showEngineList.value = !showEngineList.value
-// }
 // 当前选中的条目
 let isResultActive = ref(0)
 
@@ -66,19 +50,7 @@ let result = ref([])
 // 搜索结果
 let resultBookmark = ref([])
 
-// 切换引擎
-// let currentEngine = ref({
-//   title: '谷歌',
-//   svg: 'google',
-//   url: 'https://www.google.com/search?q='
-// })
-
 let keyword = ref('')
-
-
-const toSearch = (e) => {
-  window.open(currentEngine.value.url + keyword.value, useMetaKey(e))
-}
 
 // let time = ref('')
 // const getTime = () => {
@@ -148,12 +120,6 @@ function search(e) {
     }
   })
 }
-
-window.addEventListener('keyup', (e) => {
-  if (e.key === 'Enter' && keyword.value) {
-    toSearch(e)
-  }
-})
 window.addEventListener('keydown', (e) => {
   // command + k 或者 esc 快捷键
   // const info = systemInfo()
@@ -169,24 +135,22 @@ window.addEventListener('keydown', (e) => {
     return
   }
 
-  // if (showSearchPanel.value) {
   // 上下按键更换选中条目
   arrowUpDownChange(isResultActive, result.value.length ? result : enginesList, e, () => {
     currentBookmark.value = result.value[isResultActive.value]
-
   })
-  // }
+
   // 回车跳转
   if (e.key === 'Enter') {
-    if (currentBookmark.value?.title) {
+    if (result.value.length){
       window.open(currentBookmark.value.url, useMetaKey(e))
+    } else {
+      console.log(123)
+      window.open(`https://www.baidu.com/s?tn=68018901_2_oem_dg&ie=utf-8&wd=${keyword.value}`, useMetaKey(e))
     }
+    
   }
 })
-// window.addEventListener('click', () => {
-//   showEngineList.value = false
-// })
-
 
 </script>
 <style lang="less" scoped>
@@ -256,7 +220,7 @@ window.addEventListener('keydown', (e) => {
           padding: 0;
           background: var(--bookmark-bg-color);
           color: var(--font-color);
-          transition: background 0.2s ease-in-out;
+          // transition: background 0.2s ease-in-out;
         }
 
         .prefix {
